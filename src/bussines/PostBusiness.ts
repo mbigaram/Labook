@@ -1,4 +1,5 @@
 import { PostDatabase } from "../database/PostDatabase"
+import { PostDTO } from "../dtos/PostDTO"
 import { BadRequestError } from "../errors/BadRequestError"
 import { Post } from "../models/Post"
 import { PostDB, UpdatedPost } from "../Types"
@@ -27,25 +28,25 @@ export class PostBusiness {
 
         const { id, creatorId, content, likes, dislikes } = input
 
-        if (typeof id !== "string") {
-            throw new BadRequestError("'id' deve ser string")
-        }
+        // if (typeof id !== "string") {
+        //     throw new BadRequestError("'id' deve ser string")
+        // }
 
-        if (typeof creatorId !== "string") {
-            throw new BadRequestError("'creatorId' deve ser string")
-        }
+        // if (typeof creatorId !== "string") {
+        //     throw new BadRequestError("'creatorId' deve ser string")
+        // }
 
-        if (typeof content !== "string") {
-            throw new BadRequestError("'duration' deve ser string")
-        }
+        // if (typeof content !== "string") {
+        //     throw new BadRequestError("'duration' deve ser string")
+        // }
 
-        if (typeof likes !== "number") {
-            throw new BadRequestError("'likes' deve ser integer")
-        }
+        // if (typeof likes !== "number") {
+        //     throw new BadRequestError("'likes' deve ser integer")
+        // }
 
-        if (typeof dislikes !== "number") {
-            throw new BadRequestError("'dislikes' deve ser integer")
-        }
+        // if (typeof dislikes !== "number") {
+        //     throw new BadRequestError("'dislikes' deve ser integer")
+        // }
 
         const postDatabase = new PostDatabase()
         const postDBExists = await postDatabase.findPostById(id)
@@ -83,10 +84,13 @@ export class PostBusiness {
 
         postDatabase.insertPost(newPostDB)
 
-        const output = {
-            message: "Cadastro realizado com sucesso",
-            user: newPost
-        }
+        // const output = {
+        //     message: "Cadastro realizado com sucesso",
+        //     user: newPost
+        // }
+
+        const postDTO = new PostDTO()
+        const output = postDTO.createPostOutput(newPost)
 
         return output
 
