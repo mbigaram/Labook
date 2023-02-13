@@ -7,12 +7,19 @@ import { Post } from "../models/Post"
 import { UpdatedPost } from "../Types"
 
 export class PostController {
+
+    constructor(
+        private postDTO: PostDTO,
+        private postBusiness: PostBusiness
+
+    ){}
+
     public getPosts = async (req: Request, res: Response) => {
         try {
             const q = req.query.q as string | undefined
 
-            const postBusiness = new PostBusiness()
-            const output = await postBusiness.getPost(q)
+            //const postBusiness = new PostBusiness()
+            const output = await this.postBusiness.getPost(q)
 
             res.status(200).send(output)
         } catch (error) {
@@ -38,8 +45,8 @@ export class PostController {
             //     updated_at: req.body.updated_at
             // }
 
-            const postDTO = new PostDTO()
-            const input = postDTO.createPostInput(
+            //const postDTO = new PostDTO()
+            const input = this.postDTO.createPostInput(
                 req.body.id,
                 req.body.creator_id,
                 req.body.content,
@@ -72,8 +79,8 @@ export class PostController {
                 updatedAt: req.body.updated_at
             }
 
-            const postBusiness = new PostBusiness()
-            const output = await postBusiness.editPost(input)
+            //const postBusiness = new PostBusiness()
+            const output = await this.postBusiness.editPost(input)
 
             res.status(200).send(output)
 
@@ -93,8 +100,8 @@ export class PostController {
         try {
             const id = req.params.id
 
-            const postBusiness = new PostBusiness()
-            const output = await postBusiness.deletePost(id)
+            //const postBusiness = new PostBusiness()
+            const output = await this.postBusiness.deletePost(id)
             
             res.status(200).send(output)
 
