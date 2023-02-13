@@ -1,6 +1,7 @@
 import { Request, Response } from "express"
 import { PostBusiness } from "../bussines/PostBusiness"
 import { PostDatabase } from "../database/PostDatabase"
+import { PostDTO } from "../dtos/PostDTO"
 import { BaseError } from "../errors/BaseError"
 import { Post } from "../models/Post"
 import { UpdatedPost } from "../Types"
@@ -27,15 +28,25 @@ export class PostController {
     //create
     public createPost = async (req: Request, res: Response) => {
         try {
-            const input = {
-                id: req.body.id,
-                creatorId: req.body.creator_id,
-                content: req.body.content,
-                likes: req.body.likes,
-                dislikes: req.body.dislikes,
-                created_at: req.body.created_at,
-                updated_at: req.body.updated_at
-            }
+            // const input = {
+            //     id: req.body.id,
+            //     creatorId: req.body.creator_id,
+            //     content: req.body.content,
+            //     likes: req.body.likes,
+            //     dislikes: req.body.dislikes,
+            //     created_at: req.body.created_at,
+            //     updated_at: req.body.updated_at
+            // }
+
+            const postDTO = new PostDTO()
+            const input = postDTO.createPostInput(
+                req.body.id,
+                req.body.creator_id,
+                req.body.content,
+                req.body.likes,
+                req.body.dislikes 
+            )
+
             const userBusiness = new PostBusiness()
             const output = await userBusiness.createPost(input)
 
